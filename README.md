@@ -53,7 +53,7 @@ sistema-despesas-client/
 
 - Navegador web moderno (Chrome, Firefox, Safari, Edge)
 - API backend rodando em `http://localhost:5000`
-- A API pode ser encontrada em `https://github.com/sampconrad/sistema-despesas-api`
+- A API pode ser encontrada em https://github.com/sampconrad/sistema-despesas-api
 
 ### Passos para Instalação
 
