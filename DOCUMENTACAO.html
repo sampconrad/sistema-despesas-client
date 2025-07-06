@@ -358,6 +358,17 @@ Dir/
 └── DOCUMENTACAO.html               # Apresentação da aplicação
         </div>
 
+        <h2>🔗 Links da Aplicação</h2>
+        
+        <div class="center-buttons">
+            <a href="https://github.com/sampconrad/sistema-despesas-api" target="_blank" class="btn btn-success">
+                📦 Backend API (GitHub)
+            </a>
+            <a href="https://github.com/sampconrad/sistema-despesas-client" target="_blank" class="btn btn-success">
+                🎨 Frontend Client (GitHub)
+            </a>
+        </div>
+
         <h2>🚀 Como Executar a Aplicação</h2>
         
         <div class="steps">
@@ -365,7 +376,6 @@ Dir/
                 <strong>1. Configurar o Backend</strong>
                 <p>Navegue para a pasta do backend e configure o ambiente:</p>
                 <div class="code-block">
-cd sistema-despesas-api
 python -m venv venv
                 </div>
                 <p>Ative o ambiente virtual:</p>
@@ -376,9 +386,12 @@ venv\Scripts\activate
 # Linux/Mac
 source venv/bin/activate
                 </div>
-                <p>Instale as dependências e execute a API:</p>
+                <p>Instale as dependências:</p>
                 <div class="code-block">
 pip install -r requirements.txt
+                </div>
+                <p>Execute a API:</p>
+                <div class="code-block">
 flask run --host 0.0.0.0 --port 5000 --reload
                 </div>
             </div>
