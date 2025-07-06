@@ -2,6 +2,8 @@ const API_BASE_URL = 'http://localhost:5000';
 
 let despesas = [];
 let editandoId = null;
+let campoOrdenacao = 'titulo';
+let direcaoOrdenacao = 'asc';
 
 const despesaForm = document.getElementById('despesaForm');
 const despesaId = document.getElementById('despesaId');
@@ -19,11 +21,18 @@ const despesasTableBody = document.getElementById('despesasTableBody');
 const loadingMessage = document.getElementById('loadingMessage');
 const emptyMessage = document.getElementById('emptyMessage');
 const despesasList = document.getElementById('despesasList');
+const filtrosOrdenacao = document.getElementById('filtrosOrdenacao');
+const campoOrdenacaoSelect = document.getElementById('campoOrdenacao');
+const btnCrescente = document.getElementById('btnCrescente');
+const btnDecrescente = document.getElementById('btnDecrescente');
+const btnLimparFiltros = document.getElementById('btnLimparFiltros');
 
 document.addEventListener('DOMContentLoaded', function () {
   carregarDespesas();
   setupEventListeners();
   setupValorFormatting();
+  
+  btnCrescente.classList.add('active');
 });
 
 function setupEventListeners() {
@@ -36,6 +45,11 @@ function setupEventListeners() {
   document.getElementById('confirmDeleteBtn').addEventListener('click', confirmarExclusao);
 
   diaVencimento.addEventListener('input', validarDiaVencimento);
+
+  campoOrdenacaoSelect.addEventListener('change', handleCampoOrdenacaoChange);
+  btnCrescente.addEventListener('click', () => setDirecaoOrdenacao('asc'));
+  btnDecrescente.addEventListener('click', () => setDirecaoOrdenacao('desc'));
+  btnLimparFiltros.addEventListener('click', limparFiltrosOrdenacao);
 }
 
 function setupValorFormatting() {
@@ -212,7 +226,7 @@ function limparFormulario() {
 
   submitText.textContent = 'Adicionar Despesa';
   formTitle.innerHTML =
-    '<i class="bi bi-plus-circle-fill me-2 text-primary"></i>Adicionar Nova Despesa';
+    '<i class="bi bi-plus-circle-fill me-2 text-primary"></i>Adicionar Despesa';
   cancelBtn.style.display = 'none';
 
   document.querySelectorAll('.form-control, .form-select').forEach((field) => {
@@ -356,7 +370,9 @@ function renderizarDespesas() {
   mostrarLista();
   despesasTableBody.innerHTML = '';
 
-  despesas.forEach((despesa) => {
+  const despesasOrdenadas = ordenarDespesas(despesas);
+
+  despesasOrdenadas.forEach((despesa) => {
     const row = criarLinhaDespesa(despesa);
     despesasTableBody.appendChild(row);
   });
@@ -370,11 +386,17 @@ function criarLinhaDespesa(despesa) {
 
   const hoje = new Date();
   const diaHoje = hoje.getDate();
+  const isVencimentoVencido = despesa.dia_vencimento < diaHoje && !despesa.paga;
   const isVencimentoHoje = despesa.dia_vencimento === diaHoje && !despesa.paga;
 
-  const vencimentoHTML = isVencimentoHoje 
-    ? `<span class="vencimento-hoje">Dia ${despesa.dia_vencimento} <i class="bi bi-exclamation-triangle-fill text-danger ms-1" title="Vencimento hoje!"></i></span>`
-    : `Dia ${despesa.dia_vencimento}`;
+  let vencimentoHTML;
+  if (isVencimentoVencido) {
+    vencimentoHTML = `<span class="vencimento-vencido">Dia ${despesa.dia_vencimento} <i class="bi bi-exclamation-triangle-fill text-danger ms-1" title="Despesa vencida!"></i></span>`;
+  } else if (isVencimentoHoje) {
+    vencimentoHTML = `<span class="vencimento-hoje">Dia ${despesa.dia_vencimento} <i class="bi bi-exclamation-triangle-fill text-warning ms-1" title="Vence hoje!"></i></span>`;
+  } else {
+    vencimentoHTML = `Dia ${despesa.dia_vencimento}`;
+  }
 
   row.innerHTML = `
         <td>${despesa.titulo}</td>
@@ -502,11 +524,13 @@ function mostrarListaVazia() {
   despesasList.style.display = 'none';
   emptyMessage.style.display = 'block';
   document.getElementById('totalDespesas').style.display = 'none';
+  filtrosOrdenacao.style.display = 'none';
 }
 
 function mostrarLista() {
   despesasList.style.display = 'block';
   emptyMessage.style.display = 'none';
+  mostrarFiltrosOrdenacao();
 }
 
 function calcularEExibirTotal() {
@@ -581,4 +605,81 @@ async function verificarAPI() {
 
 function recarregarDados() {
   carregarDespesas();
+}
+
+// ==================== FUNÇÕES DE ORDENAÇÃO ====================
+
+function handleCampoOrdenacaoChange() {
+  campoOrdenacao = campoOrdenacaoSelect.value;
+  renderizarDespesas();
+}
+
+function setDirecaoOrdenacao(direcao) {
+  direcaoOrdenacao = direcao;
+  
+  btnCrescente.classList.toggle('active', direcao === 'asc');
+  btnDecrescente.classList.toggle('active', direcao === 'desc');
+  
+  renderizarDespesas();
+}
+
+function limparFiltrosOrdenacao() {
+  campoOrdenacao = 'titulo';
+  direcaoOrdenacao = 'asc';
+  
+  campoOrdenacaoSelect.value = 'titulo';
+  btnCrescente.classList.remove('active');
+  btnDecrescente.classList.remove('active');
+  
+  renderizarDespesas();
+}
+
+function ordenarDespesas(despesasArray) {
+  return [...despesasArray].sort((a, b) => {
+    let valorA, valorB;
+    
+    switch (campoOrdenacao) {
+      case 'titulo':
+        valorA = a.titulo.toLowerCase();
+        valorB = b.titulo.toLowerCase();
+        break;
+      case 'tipo':
+        valorA = a.tipo.toLowerCase();
+        valorB = b.tipo.toLowerCase();
+        break;
+      case 'valor':
+        valorA = parseFloat(a.valor);
+        valorB = parseFloat(b.valor);
+        break;
+      case 'parcelas':
+        valorA = a.parcelas || 0;
+        valorB = b.parcelas || 0;
+        break;
+      case 'dia_vencimento':
+        valorA = parseInt(a.dia_vencimento);
+        valorB = parseInt(b.dia_vencimento);
+        break;
+      case 'paga':
+        valorA = a.paga ? 1 : 0;
+        valorB = b.paga ? 1 : 0;
+        break;
+      default:
+        valorA = a.titulo.toLowerCase();
+        valorB = b.titulo.toLowerCase();
+    }
+    
+    if (direcaoOrdenacao === 'asc') {
+      return valorA > valorB ? 1 : valorA < valorB ? -1 : 0;
+    } else {
+      return valorA < valorB ? 1 : valorA > valorB ? -1 : 0;
+    }
+  });
+}
+
+function mostrarFiltrosOrdenacao() {
+  if (despesas.length > 0) {
+    filtrosOrdenacao.style.display = 'block';
+  } else {
+    filtrosOrdenacao.style.display = 'none';
+  }
 }

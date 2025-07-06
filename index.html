@@ -62,7 +62,7 @@
             id="formTitle"
             class="d-flex align-items-center">
             <i class="bi bi-plus-circle-fill me-2 text-primary"></i>
-            <span>Adicionar Nova Despesa</span>
+            <span>Adicionar Despesa</span>
           </h5>
         </div>
         <div class="card-body">
@@ -204,6 +204,43 @@
           </button>
         </div>
         <div class="card-body">
+          <!-- Filtros de Ordenação -->
+          <div id="filtrosOrdenacao" class="mb-4" style="display: none;">
+            <div class="d-flex align-items-end gap-3 flex-wrap">
+              <div class="flex-grow-1" style="min-width: 200px;">
+                <label for="campoOrdenacao" class="form-label mb-1">
+                  Ordenar por:
+                </label>
+                <select class="form-select form-select-sm" id="campoOrdenacao">
+                  <option value="titulo">Título</option>
+                  <option value="tipo">Tipo</option>
+                  <option value="valor">Valor</option>
+                  <option value="parcelas">Parcelas</option>
+                  <option value="dia_vencimento">Vencimento</option>
+                  <option value="paga">Status</option>
+                </select>
+              </div>
+              <div>
+                <label class="form-label mb-1">
+                  <i class="bi bi-arrow-up-down me-1 text-primary"></i>Direção:
+                </label>
+                <div class="d-flex gap-1">
+                  <button type="button" class="btn btn-outline-primary btn-sm" id="btnCrescente" title="Crescente">
+                    <i class="bi bi-sort-up"></i>
+                  </button>
+                  <button type="button" class="btn btn-outline-primary btn-sm" id="btnDecrescente" title="Decrescente">
+                    <i class="bi bi-sort-down"></i>
+                  </button>
+                </div>
+              </div>
+              <div>
+                <button type="button" class="btn btn-secondary btn-sm" id="btnLimparFiltros">
+                  <i class="bi bi-x-circle-fill me-1"></i>Limpar Filtros
+                </button>
+              </div>
+            </div>
+          </div>
+
           <div
             id="loadingMessage"
             class="text-center py-4"
