@@ -1,459 +1,433 @@
 <!DOCTYPE html>
 <html lang="pt-BR">
-  <head>
-    <meta charset="UTF-8" />
-    <meta
-      name="viewport"
-      content="width=device-width, initial-scale=1.0" />
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Sistema de Despesas Mensais - Teste da Aplicação</title>
     <style>
-      body {
-        font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-        max-width: 1000px;
-        margin: 0 auto;
-        padding: 20px;
-        background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-        min-height: 100vh;
-      }
-      .container {
-        background: white;
-        padding: 40px;
-        border-radius: 15px;
-        box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
-      }
-      .header {
-        text-align: center;
-        margin-bottom: 30px;
-        padding-bottom: 20px;
-        border-bottom: 3px solid #667eea;
-      }
-      .header h1 {
-        color: #2c3e50;
-        margin-bottom: 10px;
-        font-size: 2.5em;
-      }
-      .status {
-        padding: 20px;
-        margin: 20px 0;
-        border-radius: 10px;
-        font-weight: 500;
-        border-left: 5px solid;
-      }
-      .success {
-        background-color: #d4edda;
-        color: #155724;
-        border-left-color: #28a745;
-      }
-      .error {
-        background-color: #f8d7da;
-        color: #721c24;
-        border-left-color: #dc3545;
-      }
-      .info {
-        background-color: #d1ecf1;
-        color: #0c5460;
-        border-left-color: #17a2b8;
-      }
-      .warning {
-        background-color: #fff3cd;
-        color: #856404;
-        border-left-color: #ffc107;
-      }
-      .btn {
-        background: linear-gradient(45deg, #667eea, #764ba2);
-        color: white;
-        padding: 12px 25px;
-        border: none;
-        border-radius: 8px;
-        cursor: pointer;
-        text-decoration: none;
-        display: inline-block;
-        margin: 8px;
-        font-weight: 600;
-        transition: all 0.3s ease;
-        box-shadow: 0 4px 15px rgba(102, 126, 234, 0.3);
-      }
-      .btn:hover {
-        transform: translateY(-2px);
-        box-shadow: 0 6px 20px rgba(102, 126, 234, 0.4);
-      }
-      .btn-success {
-        background: linear-gradient(45deg, #28a745, #20c997);
-        box-shadow: 0 4px 15px rgba(40, 167, 69, 0.3);
-      }
-      .btn-success:hover {
-        box-shadow: 0 6px 20px rgba(40, 167, 69, 0.4);
-      }
-      .btn-warning {
-        background: linear-gradient(45deg, #ffc107, #fd7e14);
-        box-shadow: 0 4px 15px rgba(255, 193, 7, 0.3);
-      }
-      .btn-warning:hover {
-        box-shadow: 0 6px 20px rgba(255, 193, 7, 0.4);
-      }
-      .feature-grid {
-        display: grid;
-        grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
-        gap: 20px;
-        margin: 30px 0;
-      }
-      .feature-card {
-        background: #f8f9fa;
-        padding: 20px;
-        border-radius: 10px;
-        border-left: 4px solid #667eea;
-      }
-      .feature-card h4 {
-        color: #2c3e50;
-        margin-bottom: 15px;
-      }
-      .feature-card ul {
-        margin: 0;
-        padding-left: 20px;
-      }
-      .feature-card li {
-        margin-bottom: 8px;
-      }
-      .code-block {
-        background: #2c3e50;
-        color: #ecf0f1;
-        padding: 15px;
-        border-radius: 8px;
-        font-family: 'Courier New', monospace;
-        margin: 15px 0;
-        overflow-x: auto;
-        white-space: pre-wrap;
-        word-wrap: break-word;
-        line-height: 1.4;
-      }
-      .endpoint-table {
-        width: 100%;
-        border-collapse: collapse;
-        margin: 20px 0;
-      }
-      .endpoint-table th,
-      .endpoint-table td {
-        padding: 12px;
-        text-align: left;
-        border-bottom: 1px solid #ddd;
-      }
-      .endpoint-table th {
-        background-color: #667eea;
-        color: white;
-        font-weight: 600;
-      }
-      .endpoint-table tr:nth-child(even) {
-        background-color: #f8f9fa;
-      }
-      .endpoint-table tr:hover {
-        background-color: #e9ecef;
-      }
-      .tech-stack {
-        display: flex;
-        flex-wrap: wrap;
-        gap: 10px;
-        margin: 15px 0;
-      }
-      .tech-tag {
-        background: #667eea;
-        color: white;
-        padding: 5px 12px;
-        border-radius: 20px;
-        font-size: 0.9em;
-        font-weight: 500;
-      }
-      .steps {
-        counter-reset: step-counter;
-      }
-      .step {
-        counter-increment: step-counter;
-        margin-bottom: 20px;
-        padding: 15px;
-        background: #f8f9fa;
-        border-radius: 8px;
-        border-left: 4px solid #667eea;
-      }
-      .step::before {
-        content: counter(step-counter);
-        background: #667eea;
-        color: white;
-        width: 25px;
-        height: 25px;
-        border-radius: 50%;
-        display: inline-flex;
-        align-items: center;
-        justify-content: center;
-        margin-right: 10px;
-        font-weight: bold;
-      }
-      .center-buttons {
-        text-align: center;
-        margin: 40px 0;
-      }
-      .footer {
-        text-align: center;
-        margin-top: 40px;
-        padding-top: 20px;
-        border-top: 2px solid #e9ecef;
-        color: #6c757d;
-      }
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            max-width: 1000px;
+            margin: 0 auto;
+            padding: 20px;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+        }
+        .container {
+            background: white;
+            padding: 40px;
+            border-radius: 15px;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.2);
+        }
+        .header {
+            text-align: center;
+            margin-bottom: 30px;
+            padding-bottom: 20px;
+            border-bottom: 3px solid #667eea;
+        }
+        .header h1 {
+            color: #2c3e50;
+            margin-bottom: 10px;
+            font-size: 2.5em;
+        }
+        .status {
+            padding: 20px;
+            margin: 20px 0;
+            border-radius: 10px;
+            font-weight: 500;
+            border-left: 5px solid;
+        }
+        .success { 
+            background-color: #d4edda; 
+            color: #155724; 
+            border-left-color: #28a745;
+        }
+        .error { 
+            background-color: #f8d7da; 
+            color: #721c24; 
+            border-left-color: #dc3545;
+        }
+        .info { 
+            background-color: #d1ecf1; 
+            color: #0c5460; 
+            border-left-color: #17a2b8;
+        }
+        .warning {
+            background-color: #fff3cd;
+            color: #856404;
+            border-left-color: #ffc107;
+        }
+        .btn {
+            background: linear-gradient(45deg, #667eea, #764ba2);
+            color: white;
+            padding: 12px 25px;
+            border: none;
+            border-radius: 8px;
+            cursor: pointer;
+            text-decoration: none;
+            display: inline-block;
+            margin: 8px;
+            font-weight: 600;
+            transition: all 0.3s ease;
+            box-shadow: 0 4px 15px rgba(102, 126, 234, 0.3);
+        }
+        .btn:hover { 
+            transform: translateY(-2px);
+            box-shadow: 0 6px 20px rgba(102, 126, 234, 0.4);
+        }
+        .btn-success { 
+            background: linear-gradient(45deg, #28a745, #20c997);
+            box-shadow: 0 4px 15px rgba(40, 167, 69, 0.3);
+        }
+        .btn-success:hover {
+            box-shadow: 0 6px 20px rgba(40, 167, 69, 0.4);
+        }
+        .btn-warning {
+            background: linear-gradient(45deg, #ffc107, #fd7e14);
+            box-shadow: 0 4px 15px rgba(255, 193, 7, 0.3);
+        }
+        .btn-warning:hover {
+            box-shadow: 0 6px 20px rgba(255, 193, 7, 0.4);
+        }
+        .feature-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 20px;
+            margin: 30px 0;
+        }
+        .feature-card {
+            background: #f8f9fa;
+            padding: 20px;
+            border-radius: 10px;
+            border-left: 4px solid #667eea;
+        }
+        .feature-card h4 {
+            color: #2c3e50;
+            margin-bottom: 15px;
+        }
+        .feature-card ul {
+            margin: 0;
+            padding-left: 20px;
+        }
+        .feature-card li {
+            margin-bottom: 8px;
+        }
+        .code-block {
+            background: #2c3e50;
+            color: #ecf0f1;
+            padding: 15px;
+            border-radius: 8px;
+            font-family: 'Courier New', monospace;
+            margin: 15px 0;
+            overflow-x: auto;
+            white-space: pre-wrap;
+            word-wrap: break-word;
+            line-height: 1.4;
+        }
+        .endpoint-table {
+            width: 100%;
+            border-collapse: collapse;
+            margin: 20px 0;
+        }
+        .endpoint-table th,
+        .endpoint-table td {
+            padding: 12px;
+            text-align: left;
+            border-bottom: 1px solid #ddd;
+        }
+        .endpoint-table th {
+            background-color: #667eea;
+            color: white;
+            font-weight: 600;
+        }
+        .endpoint-table tr:nth-child(even) {
+            background-color: #f8f9fa;
+        }
+        .endpoint-table tr:hover {
+            background-color: #e9ecef;
+        }
+        .tech-stack {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 10px;
+            margin: 15px 0;
+        }
+        .tech-tag {
+            background: #667eea;
+            color: white;
+            padding: 5px 12px;
+            border-radius: 20px;
+            font-size: 0.9em;
+            font-weight: 500;
+        }
+        .steps {
+            counter-reset: step-counter;
+        }
+        .step {
+            counter-increment: step-counter;
+            margin-bottom: 20px;
+            padding: 15px;
+            background: #f8f9fa;
+            border-radius: 8px;
+            border-left: 4px solid #667eea;
+        }
+        .step::before {
+            content: counter(step-counter);
+            background: #667eea;
+            color: white;
+            width: 25px;
+            height: 25px;
+            border-radius: 50%;
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            margin-right: 10px;
+            font-weight: bold;
+        }
+        .center-buttons {
+            text-align: center;
+            margin: 40px 0;
+        }
+        .footer {
+            text-align: center;
+            margin-top: 40px;
+            padding-top: 20px;
+            border-top: 2px solid #e9ecef;
+            color: #6c757d;
+        }
     </style>
-  </head>
-  <body>
+</head>
+<body>
     <div class="container">
-      <div class="header">
-        <h1>💰 Sistema de Despesas Mensais</h1>
-        <p>
-          Aplicação completa para gerenciamento de despesas com API Flask e interface web moderna
-        </p>
-      </div>
-
-      <div class="status success">
-        <h3>✅Objetivos da aplicação</h3>
-        <p>
-          O sistema de gerenciamento de despesas mensais foi desenvolvido com o objetivo de
-          facilitar o controle financeiro pessoal. Ele permite cadastrar, editar e excluir despesas,
-          além de exibir uma lista detalhada das despesas cadastradas.
-        </p>
-      </div>
-
-      <h2>🏗️ Arquitetura da Aplicação</h2>
-
-      <div class="feature-grid">
-        <div class="feature-card">
-          <h4>🔧 Backend (API Flask)</h4>
-          <div class="tech-stack">
-            <span class="tech-tag">Python 3.8+</span>
-            <span class="tech-tag">Flask</span>
-            <span class="tech-tag">SQLAlchemy</span>
-            <span class="tech-tag">SQLite</span>
-            <span class="tech-tag">Pydantic</span>
-          </div>
-          <ul>
-            <li>API REST completa com 5 endpoints</li>
-            <li>Documentação Swagger/OpenAPI integrada</li>
-            <li>Banco de dados SQLite com modelo relacional</li>
-            <li>Validação robusta de dados</li>
-            <li>Sistema de logs detalhado</li>
-          </ul>
+        <div class="header">
+            <h1>💰 Sistema de Despesas Mensais</h1>
+            <p>Aplicação completa para gerenciamento de despesas com API Flask e interface web moderna</p>
+        </div>
+        
+        <div class="status success">
+            <h3>✅Objetivos da aplicação</h3>
+            <p>O sistema de gerenciamento de despesas mensais foi desenvolvido com o objetivo de facilitar o controle financeiro pessoal. Ele permite cadastrar, editar e excluir despesas, além de exibir uma lista detalhada das despesas cadastradas.</p>
         </div>
 
-        <div class="feature-card">
-          <h4>🎨 Frontend (SPA)</h4>
-          <div class="tech-stack">
-            <span class="tech-tag">HTML5</span>
-            <span class="tech-tag">CSS3</span>
-            <span class="tech-tag">JavaScript ES6+</span>
-            <span class="tech-tag">Bootstrap 5</span>
-          </div>
-          <ul>
-            <li>Interface responsiva e moderna</li>
-            <li>Formulário dinâmico com validação</li>
-            <li>Formatação automática de moeda brasileira</li>
-            <li>Sistema de notificações toast</li>
-            <li>Modal de confirmação para exclusão</li>
-            <li>Ícones Bootstrap para melhor UX</li>
-          </ul>
-        </div>
-      </div>
+        <h2>🏗️ Arquitetura da Aplicação</h2>
+        
+        <div class="feature-grid">
+            <div class="feature-card">
+                <h4>🔧 Backend (API Flask)</h4>
+                <div class="tech-stack">
+                    <span class="tech-tag">Python 3.8+</span>
+                    <span class="tech-tag">Flask</span>
+                    <span class="tech-tag">SQLAlchemy</span>
+                    <span class="tech-tag">SQLite</span>
+                    <span class="tech-tag">Pydantic</span>
+                </div>
+                <ul>
+                    <li>API REST completa com 5 endpoints</li>
+                    <li>Documentação Swagger/OpenAPI integrada</li>
+                    <li>Banco de dados SQLite com modelo relacional</li>
+                    <li>Validação robusta de dados</li>
+                    <li>Sistema de logs detalhado</li>
+                </ul>
+            </div>
 
-      <h2>📋 Funcionalidades Implementadas</h2>
-
-      <div class="status info">
-        <h4>✅ Operações CRUD Completas</h4>
-        <ul>
-          <li><strong>CREATE:</strong> Cadastro de despesas com validação em tempo real</li>
-          <li><strong>READ:</strong> Listagem com filtros e formatação de dados</li>
-          <li><strong>UPDATE:</strong> Edição inline com formulário pré-preenchido</li>
-          <li><strong>DELETE:</strong> Exclusão com confirmação modal</li>
-        </ul>
-      </div>
-
-      <div class="status info">
-        <h4>✅ Tipos de Despesa Suportados</h4>
-        <ul>
-          <li><strong>CRÉDITO FIXO:</strong> Despesas recorrentes com valor fixo</li>
-          <li>
-            <strong>CRÉDITO PARCELADO:</strong> Despesas parceladas com controle de parcelas
-            restantes
-          </li>
-          <li><strong>PIX:</strong> Pagamentos via PIX</li>
-          <li><strong>BOLETO:</strong> Pagamentos via boleto bancário</li>
-        </ul>
-      </div>
-
-      <div class="status info">
-        <h4>✅ Recursos Avançados</h4>
-        <ul>
-          <li>
-            <strong>Campo de parcelas condicional:</strong> Habilitado apenas para CRÉDITO PARCELADO
-          </li>
-          <li><strong>Dia de vencimento simplificado:</strong> Apenas o dia do mês (1-31)</li>
-          <li><strong>Status de pagamento:</strong> Controle de despesas pagas/pendentes</li>
-          <li>
-            <strong>Formatação de moeda:</strong> Automática no formato brasileiro (R$ 1.500,00)
-          </li>
-          <li><strong>Validação robusta:</strong> Campos obrigatórios e regras de negócio</li>
-        </ul>
-      </div>
-
-      <h2>🔗 API Endpoints</h2>
-
-      <table class="endpoint-table">
-        <thead>
-          <tr>
-            <th>Método</th>
-            <th>Endpoint</th>
-            <th>Descrição</th>
-            <th>Status</th>
-          </tr>
-        </thead>
-        <tbody>
-          <tr>
-            <td><strong>POST</strong></td>
-            <td><code>/despesa</code></td>
-            <td>Criar nova despesa</td>
-            <td>✅ Implementado</td>
-          </tr>
-          <tr>
-            <td><strong>GET</strong></td>
-            <td><code>/despesas</code></td>
-            <td>Listar todas as despesas</td>
-            <td>✅ Implementado</td>
-          </tr>
-          <tr>
-            <td><strong>GET</strong></td>
-            <td><code>/despesa?id={id}</code></td>
-            <td>Buscar despesa por ID</td>
-            <td>✅ Implementado</td>
-          </tr>
-          <tr>
-            <td><strong>PUT</strong></td>
-            <td><code>/despesa</code></td>
-            <td>Atualizar despesa existente</td>
-            <td>✅ Implementado</td>
-          </tr>
-          <tr>
-            <td><strong>DELETE</strong></td>
-            <td><code>/despesa?id={id}</code></td>
-            <td>Excluir despesa</td>
-            <td>✅ Implementado</td>
-          </tr>
-        </tbody>
-      </table>
-
-      <h2>📁 Estrutura do Projeto</h2>
-
-      <div class="code-block">
-        Dir/ ├── sistema-despesas-api/ # Backend Flask │ ├── app.py # Aplicação principal │ ├──
-        requirements.txt # Dependências Python │ ├── README.md # Documentação backend │ ├──
-        database/ │ │ └── db.sqlite3 # Banco SQLite │ ├── log/ │ │ └── gunicorn.detailed.log # Logs
-        da aplicação │ ├── logger.py # Configuração de logs │ ├── model/ # Modelos SQLAlchemy │ │
-        ├── __init__.py │ │ ├── base.py # Configuração base │ │ └── despesa.py # Modelo de despesas
-        │ └── schemas/ # Schemas Pydantic │ ├── __init__.py │ ├── despesa.py # Schemas de despesas │
-        └── error.py # Schema de erros ├── sistema-despesas-client/ # Frontend SPA │ ├── index.html
-        # Interface principal │ ├── styles.css # Estilos personalizados │ ├── scripts.js # Lógica
-        JavaScript │ ├── README.md # Documentação frontend │ └── img/ │ └── money.png # Ícone do
-        sistema └── DOCUMENTACAO.html # Apresentação da aplicação
-      </div>
-
-      <h2>🚀 Como Executar a Aplicação</h2>
-
-      <div class="steps">
-        <div class="step">
-          <strong>1. Configurar o Backend</strong>
-          <p>Navegue para a pasta do backend e configure o ambiente:</p>
-          <div class="code-block">cd sistema-despesas-api python -m venv venv</div>
-          <p>Ative o ambiente virtual:</p>
-          <div class="code-block">
-            # Windows venv\Scripts\activate # Linux/Mac source venv/bin/activate
-          </div>
-          <p>Instale as dependências e execute a API:</p>
-          <div class="code-block">
-            pip install -r requirements.txt flask run --host 0.0.0.0 --port 5000 --reload
-          </div>
+            <div class="feature-card">
+                <h4>🎨 Frontend (SPA)</h4>
+                <div class="tech-stack">
+                    <span class="tech-tag">HTML5</span>
+                    <span class="tech-tag">CSS3</span>
+                    <span class="tech-tag">JavaScript ES6+</span>
+                    <span class="tech-tag">Bootstrap 5</span>
+                </div>
+                <ul>
+                    <li>Interface responsiva e moderna</li>
+                    <li>Formulário dinâmico com validação</li>
+                    <li>Formatação automática de moeda brasileira</li>
+                    <li>Sistema de notificações toast</li>
+                    <li>Modal de confirmação para exclusão</li>
+                    <li>Ícones Bootstrap para melhor UX</li>
+                </ul>
+            </div>
         </div>
 
-        <div class="step">
-          <strong>2. Acessar a Documentação da API</strong>
-          <p>Com a API rodando, acesse:</p>
-          <ul>
-            <li>
-              <strong>Swagger UI:</strong>
-              <a
-                href="http://localhost:5000/openapi"
-                target="_blank"
-                >http://localhost:5000/openapi</a
-              >
-            </li>
-            <li>
-              <strong>ReDoc:</strong>
-              <a
-                href="http://localhost:5000/openapi/redoc"
-                target="_blank"
-                >http://localhost:5000/openapi/redoc</a
-              >
-            </li>
-            <li>
-              <strong>RapiDoc:</strong>
-              <a
-                href="http://localhost:5000/openapi/rapidoc"
-                target="_blank"
-                >http://localhost:5000/openapi/rapidoc</a
-              >
-            </li>
-          </ul>
+        <h2>📋 Funcionalidades Implementadas</h2>
+        
+        <div class="status info">
+            <h4>✅ Operações CRUD Completas</h4>
+            <ul>
+                <li><strong>CREATE:</strong> Cadastro de despesas com validação em tempo real</li>
+                <li><strong>READ:</strong> Listagem com filtros e formatação de dados</li>
+                <li><strong>UPDATE:</strong> Edição inline com formulário pré-preenchido</li>
+                <li><strong>DELETE:</strong> Exclusão com confirmação modal</li>
+            </ul>
         </div>
 
-        <div class="step">
-          <strong>3. Executar o Frontend</strong>
-          <p>Navegue para <code>sistema-despesas-client/index.html</code> e abra no navegador.</p>
+        <div class="status info">
+            <h4>✅ Tipos de Despesa Suportados</h4>
+            <ul>
+                <li><strong>CRÉDITO FIXO:</strong> Despesas recorrentes com valor fixo</li>
+                <li><strong>CRÉDITO PARCELADO:</strong> Despesas parceladas com controle de parcelas restantes</li>
+                <li><strong>PIX:</strong> Pagamentos via PIX</li>
+                <li><strong>BOLETO:</strong> Pagamentos via boleto bancário</li>
+            </ul>
         </div>
 
-        <div class="step">
-          <strong>4. Testar as Funcionalidades</strong>
-          <ul>
-            <li>✅ Adicionar uma nova despesa</li>
-            <li>✅ Testar o campo de parcelas (só funciona com CRÉDITO PARCELADO)</li>
-            <li>✅ Editar uma despesa existente</li>
-            <li>✅ Excluir uma despesa</li>
-            <li>✅ Verificar formatação de moeda</li>
-            <li>✅ Testar responsividade em diferentes dispositivos</li>
-          </ul>
+        <div class="status info">
+            <h4>✅ Recursos Avançados</h4>
+            <ul>
+                <li><strong>Campo de parcelas condicional:</strong> Habilitado apenas para CRÉDITO PARCELADO</li>
+                <li><strong>Dia de vencimento simplificado:</strong> Apenas o dia do mês (1-31)</li>
+                <li><strong>Status de pagamento:</strong> Controle de despesas pagas/pendentes</li>
+                <li><strong>Formatação de moeda:</strong> Automática no formato brasileiro (R$ 1.500,00)</li>
+                <li><strong>Validação robusta:</strong> Campos obrigatórios e regras de negócio</li>
+            </ul>
         </div>
-      </div>
 
-      <h2>⚠️ Troubleshooting</h2>
+        <h2>🔗 API Endpoints</h2>
+        
+        <table class="endpoint-table">
+            <thead>
+                <tr>
+                    <th>Método</th>
+                    <th>Endpoint</th>
+                    <th>Descrição</th>
+                    <th>Status</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td><strong>POST</strong></td>
+                    <td><code>/despesa</code></td>
+                    <td>Criar nova despesa</td>
+                    <td>✅ Implementado</td>
+                </tr>
+                <tr>
+                    <td><strong>GET</strong></td>
+                    <td><code>/despesas</code></td>
+                    <td>Listar todas as despesas</td>
+                    <td>✅ Implementado</td>
+                </tr>
+                <tr>
+                    <td><strong>GET</strong></td>
+                    <td><code>/despesa?id={id}</code></td>
+                    <td>Buscar despesa por ID</td>
+                    <td>✅ Implementado</td>
+                </tr>
+                <tr>
+                    <td><strong>PUT</strong></td>
+                    <td><code>/despesa</code></td>
+                    <td>Atualizar despesa existente</td>
+                    <td>✅ Implementado</td>
+                </tr>
+                <tr>
+                    <td><strong>DELETE</strong></td>
+                    <td><code>/despesa?id={id}</code></td>
+                    <td>Excluir despesa</td>
+                    <td>✅ Implementado</td>
+                </tr>
+            </tbody>
+        </table>
 
-      <div class="status warning">
-        <h4>Problemas Comuns e Soluções</h4>
-        <ul>
-          <li>
-            <strong>Erro 422 Unprocessable Entity:</strong> Verifique se está enviando FormData (não
-            JSON)
-          </li>
-          <li>
-            <strong>Erro de CORS:</strong> Certifique-se de que a API está rodando e configurada
-            para CORS
-          </li>
-          <li>
-            <strong>Erro de banco de dados:</strong> Delete o arquivo
-            <code>database/db.sqlite3</code> para recriar
-          </li>
-          <li>
-            <strong>Formatação de moeda:</strong> Certifique-se de que o navegador suporta
-            Intl.NumberFormat
-          </li>
-          <li>
-            <strong>API não responde:</strong> Verifique se o Flask está rodando na porta 5000
-          </li>
-        </ul>
-      </div>
+        <h2>📁 Estrutura do Projeto</h2>
+        
+        <div class="code-block">
+Dir/
+├── sistema-despesas-api/           # Backend Flask
+│   ├── app.py                      # Aplicação principal
+│   ├── requirements.txt            # Dependências Python
+│   ├── README.md                   # Documentação backend
+│   ├── database/
+│   │   └── db.sqlite3              # Banco SQLite
+│   ├── log/
+│   │   └── gunicorn.detailed.log   # Logs da aplicação
+│   ├── logger.py                   # Configuração de logs
+│   ├── model/                      # Modelos SQLAlchemy
+│   │   ├── __init__.py
+│   │   ├── base.py                 # Configuração base
+│   │   └── despesa.py              # Modelo de despesas
+│   └── schemas/                    # Schemas Pydantic
+│       ├── __init__.py
+│       ├── despesa.py              # Schemas de despesas
+│       └── error.py                # Schema de erros
+├── sistema-despesas-client/        # Frontend SPA
+│   ├── index.html                  # Interface principal
+│   ├── styles.css                  # Estilos personalizados
+│   ├── scripts.js                  # Lógica JavaScript
+│   ├── README.md                   # Documentação frontend
+│   └── img/
+│       └── money.png               # Ícone do sistema
+└── DOCUMENTACAO.html               # Apresentação da aplicação
+        </div>
 
-      <div class="footer">
-        <p><strong>Sistema de Despesas Mensais</strong> - Desenvolvido por Conrado Sampaio</p>
-        <p>📧 Para suporte ou dúvidas, consulte a documentação nos READMEs dos projetos</p>
-      </div>
+        <h2>🚀 Como Executar a Aplicação</h2>
+        
+        <div class="steps">
+            <div class="step">
+                <strong>1. Configurar o Backend</strong>
+                <p>Navegue para a pasta do backend e configure o ambiente:</p>
+                <div class="code-block">
+cd sistema-despesas-api
+python -m venv venv
+                </div>
+                <p>Ative o ambiente virtual:</p>
+                <div class="code-block">
+# Windows
+venv\Scripts\activate
+
+# Linux/Mac
+source venv/bin/activate
+                </div>
+                <p>Instale as dependências e execute a API:</p>
+                <div class="code-block">
+pip install -r requirements.txt
+flask run --host 0.0.0.0 --port 5000 --reload
+                </div>
+            </div>
+
+            <div class="step">
+                <strong>2. Acessar a Documentação da API</strong>
+                <p>Com a API rodando, acesse:</p>
+                <ul>
+                    <li><strong>Swagger UI:</strong> <a href="http://localhost:5000/openapi" target="_blank">http://localhost:5000/openapi</a></li>
+                    <li><strong>ReDoc:</strong> <a href="http://localhost:5000/openapi/redoc" target="_blank">http://localhost:5000/openapi/redoc</a></li>
+                    <li><strong>RapiDoc:</strong> <a href="http://localhost:5000/openapi/rapidoc" target="_blank">http://localhost:5000/openapi/rapidoc</a></li>
+                </ul>
+            </div>
+
+            <div class="step">
+                <strong>3. Executar o Frontend</strong>
+                    <p>Navegue para <code>sistema-despesas-client/index.html</code> e abra no navegador.</p>
+            </div>
+
+            <div class="step">
+                <strong>4. Testar as Funcionalidades</strong>
+                <ul>
+                    <li>✅ Adicionar uma nova despesa</li>
+                    <li>✅ Testar o campo de parcelas (só funciona com CRÉDITO PARCELADO)</li>
+                    <li>✅ Editar uma despesa existente</li>
+                    <li>✅ Excluir uma despesa</li>
+                    <li>✅ Verificar formatação de moeda</li>
+                    <li>✅ Testar responsividade em diferentes dispositivos</li>
+                </ul>
+            </div>
+        </div>
+
+        <h2>⚠️ Troubleshooting</h2>
+        
+        <div class="status warning">
+            <h4>Problemas Comuns e Soluções</h4>
+            <ul>
+                <li><strong>Erro 422 Unprocessable Entity:</strong> Verifique se está enviando FormData (não JSON)</li>
+                <li><strong>Erro de CORS:</strong> Certifique-se de que a API está rodando e configurada para CORS</li>
+                <li><strong>Erro de banco de dados:</strong> Delete o arquivo <code>database/db.sqlite3</code> para recriar</li>
+                <li><strong>Formatação de moeda:</strong> Certifique-se de que o navegador suporta Intl.NumberFormat</li>
+                <li><strong>API não responde:</strong> Verifique se o Flask está rodando na porta 5000</li>
+            </ul>
+        </div>
+
+        <div class="footer">
+            <p><strong>Sistema de Despesas Mensais</strong> - Desenvolvido por Conrado Sampaio</p>
+            <p>📧 Para suporte ou dúvidas, consulte a documentação nos READMEs dos projetos</p>
+        </div>
     </div>
-  </body>
-</html>
+</body>
+</html> 

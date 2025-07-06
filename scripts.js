@@ -211,7 +211,8 @@ function limparFormulario() {
   parcelasDespesa.required = false;
 
   submitText.textContent = 'Adicionar Despesa';
-  formTitle.innerHTML = '<i class="bi bi-plus-square me-2"></i>Adicionar Nova Despesa';
+  formTitle.innerHTML =
+    '<i class="bi bi-plus-circle-fill me-2 text-primary"></i>Adicionar Nova Despesa';
   cancelBtn.style.display = 'none';
 
   document.querySelectorAll('.form-control, .form-select').forEach((field) => {
@@ -359,6 +360,8 @@ function renderizarDespesas() {
     const row = criarLinhaDespesa(despesa);
     despesasTableBody.appendChild(row);
   });
+
+  calcularEExibirTotal();
 }
 
 function criarLinhaDespesa(despesa) {
@@ -385,15 +388,15 @@ function criarLinhaDespesa(despesa) {
         </td>
         <td>
             <div class="action-buttons">
-                <button class="btn btn-outline-primary btn-sm action-btn" 
+                <button class="btn btn-outline-primary btn-sm action-btn edit" 
                         onclick="editarDespesa(${despesa.id})" 
                         title="Editar">
-                    <i class="bi bi-pencil"></i>
+                    <i class="bi bi-pencil-fill"></i>
                 </button>
-                <button class="btn btn-outline-danger btn-sm action-btn" 
+                <button class="btn btn-outline-danger btn-sm action-btn delete" 
                         onclick="abrirModalExclusao(${despesa.id})" 
                         title="Excluir">
-                    <i class="bi bi-trash"></i>
+                    <i class="bi bi-trash-fill"></i>
                 </button>
             </div>
         </td>
@@ -451,7 +454,8 @@ function preencherFormularioEdicao(despesa) {
   }
 
   submitText.textContent = 'Atualizar Despesa';
-  formTitle.innerHTML = '<i class="bi bi-pencil-square me-2"></i>Editar Despesa';
+  formTitle.innerHTML =
+    '<i class="bi bi-pencil-square me-2 text-primary"></i><span>Editar Despesa</span>';
   cancelBtn.style.display = 'inline-block';
 
   document.querySelector('.card').scrollIntoView({ behavior: 'smooth' });
@@ -489,6 +493,7 @@ function mostrarLoading(mostrar) {
 function mostrarListaVazia() {
   despesasList.style.display = 'none';
   emptyMessage.style.display = 'block';
+  document.getElementById('totalDespesas').style.display = 'none';
 }
 
 function mostrarLista() {
@@ -496,17 +501,52 @@ function mostrarLista() {
   emptyMessage.style.display = 'none';
 }
 
+function calcularEExibirTotal() {
+  const totalDespesasElement = document.getElementById('totalDespesas');
+  const totalValorElement = document.querySelector('.total-valor');
+
+  if (despesas.length === 0) {
+    totalDespesasElement.style.display = 'none';
+    return;
+  }
+
+  const total = despesas.reduce((soma, despesa) => {
+    return soma + parseFloat(despesa.valor);
+  }, 0);
+
+  const totalFormatado = total.toLocaleString('pt-BR', {
+    minimumFractionDigits: 2,
+    maximumFractionDigits: 2,
+  });
+
+  totalValorElement.textContent = `R$ ${totalFormatado}`;
+  totalDespesasElement.style.display = 'block';
+}
+
 function mostrarNotificacao(mensagem, tipo = 'info') {
   const toast = document.getElementById('notificationToast');
   const toastTitle = document.getElementById('toastTitle');
   const toastMessage = document.getElementById('toastMessage');
+  const toastIcon = document.getElementById('toastIcon');
 
   toastTitle.textContent =
     tipo === 'success' ? 'Sucesso' : tipo === 'error' ? 'Erro' : 'Informação';
   toastMessage.textContent = mensagem;
 
+  if (tipo === 'success') {
+    toastIcon.className = 'bi bi-check-circle-fill me-2 text-success';
+  } else if (tipo === 'error') {
+    toastIcon.className = 'bi bi-x-circle-fill me-2 text-danger';
+  } else {
+    toastIcon.className = 'bi bi-info-circle-fill me-2 text-info';
+  }
+
   toast.className = `toast ${
-    tipo === 'success' ? 'bg-success text-white' : tipo === 'error' ? 'bg-danger text-white' : ''
+    tipo === 'success'
+      ? 'bg-success text-white'
+      : tipo === 'error'
+      ? 'bg-danger text-white'
+      : 'bg-info text-white'
   }`;
 
   const bsToast = new bootstrap.Toast(toast);
