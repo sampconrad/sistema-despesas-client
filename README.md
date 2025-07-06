@@ -18,38 +18,6 @@ O frontend se comunica com a API backend para realizar todas as operações CRUD
 - **Feedback instantâneo**: Sistema de feedback ao usuário através de toasts e modais
 - **Design moderno**: Interface limpa e profissional com Bootstrap 5
 
-## Operações Detalhadas
-
-### 1. Cadastro de Despesas
-
-- **Tipo de despesa**: Select com 4 opções (CRÉDITO FIXO, CRÉDITO PARCELADO, PIX, BOLETO)
-- **Título**: Campo de texto obrigatório com validação
-- **Valor**: Campo numérico com formatação automática de moeda brasileira
-- **Dia de vencimento**: Campo numérico (1-31) para simplificar entrada
-- **Parcelas**: Habilitado apenas para CRÉDITO PARCELADO
-- **Status de pagamento**: Checkbox para marcar como paga
-
-### 2. Listagem de Despesas
-
-- **Tabela responsiva** com todas as despesas organizadas
-- **Colunas ordenadas**: ID, Tipo, Título, Valor, Dia Vencimento, Parcelas, Status, Ações
-- **Badges coloridos** para tipos e status
-- **Formatação de moeda**: Valores monetários formatados como R$ 1.500,00
-- **Ações**: Botões de editar e excluir para cada despesa
-
-### 3. Edição de Despesas
-
-- **Formulário pré-preenchido** com dados da despesa selecionada
-- **Validação** dos campos obrigatórios
-- **Cancelamento** da edição com botão dedicado
-- **Feedback visual** durante o processo de atualização
-
-### 4. Exclusão de Despesas
-
-- **Modal de confirmação** antes da exclusão
-- **Feedback** após a operação via notificação toast
-- **Atualização automática** da lista após exclusão
-
 ## Tecnologias Utilizadas
 
 - **HTML5**
