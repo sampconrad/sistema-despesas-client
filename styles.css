@@ -296,6 +296,24 @@ header h1 {
   color: var(--gray-800);
 }
 
+.vencimento-hoje {
+  color: var(--danger-color) !important;
+  font-weight: 700 !important;
+  animation: pulse-warning 2s infinite;
+}
+
+@keyframes pulse-warning {
+  0% {
+    opacity: 1;
+  }
+  50% {
+    opacity: 0.7;
+  }
+  100% {
+    opacity: 1;
+  }
+}
+
 .status-badge {
   padding: 0.5rem 1rem;
   border-radius: 50rem;
@@ -346,7 +364,7 @@ header h1 {
 }
 
 .tipo-boleto {
-  background: linear-gradient(135deg, #ed8936 0%, #dd6b20 100%);
+  background: linear-gradient(135deg, #ffe030 0%, #ffb730 100%);
   color: white;
 }
 

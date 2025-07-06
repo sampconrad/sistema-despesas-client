@@ -368,6 +368,14 @@ function criarLinhaDespesa(despesa) {
   const row = document.createElement('tr');
   row.className = 'fade-in';
 
+  const hoje = new Date();
+  const diaHoje = hoje.getDate();
+  const isVencimentoHoje = despesa.dia_vencimento === diaHoje && !despesa.paga;
+
+  const vencimentoHTML = isVencimentoHoje 
+    ? `<span class="vencimento-hoje">Dia ${despesa.dia_vencimento} <i class="bi bi-exclamation-triangle-fill text-danger ms-1" title="Vencimento hoje!"></i></span>`
+    : `Dia ${despesa.dia_vencimento}`;
+
   row.innerHTML = `
         <td>${despesa.titulo}</td>
         <td>
@@ -380,7 +388,7 @@ function criarLinhaDespesa(despesa) {
           maximumFractionDigits: 2,
         })}</td>
         <td>${despesa.parcelas || '-'}</td>
-        <td>Dia ${despesa.dia_vencimento}</td>
+        <td>${vencimentoHTML}</td>
         <td>
             <span class="status-badge ${despesa.paga ? 'status-paga' : 'status-pendente'}">
                 ${despesa.paga ? 'PAGA' : 'PENDENTE'}
