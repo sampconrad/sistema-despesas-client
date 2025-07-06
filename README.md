@@ -4,7 +4,7 @@
 
 Interface web desenvolvida em HTML, CSS e JavaScript para gerenciamento de despesas mensais. Esta aplicação permite cadastrar, visualizar, editar e excluir despesas através de uma interface moderna, responsiva e intuitiva.
 
-O frontend se comunica com a API backend para realizar todas as operações CRUD, oferecendo uma experiência de usuário fluida com validações em tempo real, formatação automática de moeda e feedback visual imediato.
+O frontend se comunica com a API backend para realizar todas as operações CRUD, oferecendo uma experiência de usuário fluida com validações em tempo real, formatação automática dos campos e feedback visual imediato.
 
 ## Funcionalidades
 
@@ -85,25 +85,21 @@ sistema-despesas-client/
 
 - Navegador web moderno (Chrome, Firefox, Safari, Edge)
 - API backend rodando em `http://localhost:5000`
+- A API pode ser encontrada em `https://github.com/sampconrad/sistema-despesas-api`
 
 ### Passos para Instalação
 
 1. **Clone o repositório** (se aplicável):
    ```bash
-   git clone <url-do-repositorio>
-   cd <repositorio>
+   git clone https://github.com/sampconrad/sistema-despesas-client.git
    ```
 
-2. **Configure a API**:
+2. **Levante a API**:
    - Certifique-se de que a API backend está rodando em `http://localhost:5000`
-   - Caso levante a API em outra porta, altere a URL da API no arquivo `scripts.js` (linha 2)
+   - Caso levante a API em outra porta, altere a URL da API no arquivo `scripts.js`
 
 3. **Execute a aplicação**:
-  - Navegue para `sistema-despesas-client/index.html` e abra no navegador.
-
-4. **Acesse a aplicação**:
-   - Se abriu diretamente: `file:///caminho/para/index.html`
-   - Se usou servidor local: `http://localhost:8000`
+   - Navegue para `sistema-despesas-client/index.html` e abra-o no navegador.
 
 ## Troubleshooting
 
