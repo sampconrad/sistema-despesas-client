@@ -1,6 +1,10 @@
 # Sistema de Despesas Mensais - Frontend
 ![image](https://github.com/user-attachments/assets/48462eb1-4081-426d-91cd-3f5a79f17d83)
 
+## Antes de tudo
+
+**📁 [Repositório com PyInstaller configurado](https://github.com/sampconrad/sistema-despesas)** - este link lhe levará para o monorepo com build automatizado, onde a aplicação é compilada em um único arquivo .exe para facilitar a utilização do sistema.
+
 ## Descrição
 
 Interface web desenvolvida em HTML, CSS e JavaScript para gerenciamento de despesas mensais. Esta aplicação permite cadastrar, visualizar, editar e excluir despesas através de uma interface moderna, responsiva e intuitiva.
