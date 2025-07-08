@@ -1,5 +1,5 @@
 # Sistema de Despesas Mensais - Frontend
-![image](https://github.com/user-attachments/assets/48462eb1-4081-426d-91cd-3f5a79f17d83)
+![image](https://github.com/user-attachments/assets/2ccab87c-9f9b-4d55-a24d-6be957c46a19)
 
 ## Antes de tudo
 
