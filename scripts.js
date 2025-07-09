@@ -409,7 +409,7 @@ function criarLinhaDespesa(despesa) {
           minimumFractionDigits: 2,
           maximumFractionDigits: 2,
         })}</td>
-        <td>${despesa.parcelas || '-'}</td>
+        <td>${despesa.parcelas ? `${despesa.parcelas} Restantes` : ''}</td>
         <td>${vencimentoHTML}</td>
         <td>
             <span class="status-badge ${despesa.paga ? 'status-paga' : 'status-pendente'}">
